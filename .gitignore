@@ -1,1 +1,4 @@
 local_state/.terraform/
+**/.terraform/*
+*.tfstate
+*.tfstate.*
