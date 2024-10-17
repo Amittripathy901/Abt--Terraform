@@ -3,3 +3,17 @@ terraform plan ---> Shows changes required by the current configuration
 terraform apply --> Apply the changes
 terraform destroy --> Destory the recent changes
 terraform validate --> Validates the configuration files
+
+
+variables:
+   variable "region" {
+    description = "The AWS Region to create resources in"
+    type = " "
+    default = "us-east-1"
+   }
+
+
+   Outputs:
+     output "name" {
+  value = output value
+}

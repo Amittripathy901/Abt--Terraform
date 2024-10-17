@@ -1,3 +1,11 @@
+variable "region" {
+  description = "Value of Region"
+  type = string
+  default = "ap-south-1"
+}
+
+
+
 terraform {
   required_providers {
     aws = {
@@ -8,7 +16,7 @@ terraform {
 }
 
 provider "aws" {
-  region = "ap-south-1"
+  region = var.region
 }
 
 resource "aws_instance" "MyServer" {
