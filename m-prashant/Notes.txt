@@ -17,3 +17,24 @@ variables:
      output "name" {
   value = output value
 }
+
+
+
+Random Provider:
+The "random" provider allows the use of randomness within Terraform configurations. This is a logical provider, which means that it works entirely within Terraform's logic, and doesn't interact with any other services.
+random = {
+      source = "hashicorp/random"
+      version = "3.6.3"
+      }
+
+
+Terraform Remote State Management
+ -> Create s3 bucket
+ -> Backend block for remote state Management
+ terraform {
+  backend "s3" or "dynamodb" or etc...{
+  bucket = "bucket-name"
+  key = "path to trafform.tfstate"
+  region = "ap-south-1"
+  }
+ }
