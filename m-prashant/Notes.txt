@@ -38,3 +38,36 @@ Terraform Remote State Management
   region = "ap-south-1"
   }
  }
+
+
+ Data Sources in Terraform"
+ It allows you to fetch and use information form:-
+    1. external sources or
+    2. existing resources within your cloud infrastructure
+
+    Useful for obtaining dyanmic data that you need for your configuration
+
+    Data Source: aws_ami
+Use this data source to get the ID of a registered AMI for use in other resources.
+
+data "aws_ami" "example" {
+  executable_users = ["self"]
+  most_recent      = true
+  name_regex       = "^myami-[0-9]{3}"
+  owners           = ["self"]
+
+  filter {
+    name   = "name"
+    values = ["myami-*"]
+  }
+
+  filter {
+    name   = "root-device-type"
+    values = ["ebs"]
+  }
+
+  filter {
+    name   = "virtualization-type"
+    values = ["hvm"]
+  }
+}
