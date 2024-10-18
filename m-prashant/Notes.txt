@@ -71,3 +71,114 @@ data "aws_ami" "example" {
     values = ["hvm"]
   }
 }
+
+
+Terraform variables: presedence (low to high below list)
+4.environment var
+3.terraform.tfvars  -> More presedence than variable.tf and environment var
+2.*.auto.rfvars
+1.-var & -var-file  --> we allocate variable file 
+
+Terraform Local Values:A local value assigns a name to an expression, so you can use the name multiple times within a module instead of repeating the expression. Local values are like a function's temporary local variables.
+
+$env:TF_VAR_aws_instance_type = "t2.micro" --> Set environment variable in windows powershell
+
+
+Limitation:
+variable "aws_instance_type" {
+  description = "What type of instance you want to create?"
+  type        = string
+  validation {   #-->Set limitation
+    condition = var.aws_instance_type=="t2.micro" || var.aws_instance_type=="t3.micro"
+    error_message = "Only t2 and t3 micro allowed"
+  }
+}
+
+
+Terraform Operators and Expression:
+# 1. Arithmetic Operators
+locals {
+  a = 5
+  b = 2
+  sum = a + b        # Addition
+  difference = a - b # Subtraction
+  product = a * b    # Multiplication
+  quotient = a / b   # Division
+  modulo = a % b     # Modulo
+}
+
+# 2. Comparison Operators
+locals {
+  equal = a == b           # Equal to
+  not_equal = a != b       # Not equal to
+  greater_than = a > b     # Greater than
+  less_than = a < b        # Less than
+  greater_or_equal = a >= b # Greater than or equal to
+  less_or_equal = a <= b   # Less than or equal to
+}
+
+# 3. Logical Operators
+locals {
+  and = a > 0 && b < 10   # Logical AND
+  or = a < 0 || b > 10    # Logical OR
+  not = !(a == b)         # Logical NOT
+}
+
+# 4. Conditional Expressions
+locals {
+  result = a > b ? "a is greater" : "b is greater or equal"
+}
+
+# 5. String Interpolation
+locals {
+  name = "John"
+  greeting = "Hello, ${name}!"
+}
+
+# 6. For Expressions
+locals {
+  list = ["a", "b", "c"]
+  upper_list = [for item in list : upper(item)]
+}
+
+# 7. Splat Expressions
+resource "aws_instance" "example" {
+  count = 3
+  # other configurations...
+}
+
+output "instance_ids" {
+  value = aws_instance.example[*].id
+}
+
+# 8. Dynamic Blocks
+resource "aws_security_group" "example" {
+  name = "example"
+  dynamic "ingress" {
+    for_each = var.service_ports
+    content {
+      from_port = ingress.value
+      to_port   = ingress.value
+      protocol  = "tcp"
+    }
+  }
+}
+
+# 9. Map and Lookup
+variable "instance_types" {
+  default = {
+    "dev"  = "t2.micro"
+    "prod" = "t2.large"
+  }
+}
+
+locals {
+  env = "dev"
+  instance_type = lookup(var.instance_types, local.env, "t2.medium")
+}
+
+# 10. Coalesce Function
+locals {
+  default_name = "default"
+  actual_name = coalesce(var.custom_name, local.default_name)
+}
