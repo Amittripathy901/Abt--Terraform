@@ -182,3 +182,25 @@ locals {
   default_name = "default"
   actual_name = coalesce(var.custom_name, local.default_name)
 }
+
+
+Terraform Functions:
+-->Built-in functions that you can call from within expressions to transform and combine values
+
+ex: max(5,12,9)
+
+  value = upper(local.value)
+  value = startswith(local.value, "Hello")
+  value = split(" ", local.value)
+  value = min(1,2,3,4,5)
+  value = abs(-15)
+  value = length(var.string_list)  #-->Length of the string
+  value = join(":", var.string_list)
+  value = contains(var.string_list, "Serv1") #-->Contains the value or not
+  value = toset(var.string_list) #-->Remove duplicate
+
+
+
+  Terraform Multi-Resources 
+  1.Count
+  2. for_each  
