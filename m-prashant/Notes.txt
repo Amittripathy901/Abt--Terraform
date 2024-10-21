@@ -204,3 +204,68 @@ ex: max(5,12,9)
   Terraform Multi-Resources 
   1.Count
   2. for_each  
+
+1.Count --> Count is a simple way to create multiple instances of a resource. It's useful when you need to create a specific number of identical or nearly identical resources.
+
+Example:
+resource "aws_instance" "server" {
+  count = 3
+  ami           = "ami-0c55b159cbfafe1f0"
+  instance_type = "t2.micro"
+  tags = {
+    Name = "Server ${count.index + 1}"
+  }
+}
+This creates 3 EC2 instances, each with a unique tag name.
+
+2.for_each --> for_each is more versatile than count. It allows you to create multiple resources based on a map or set of strings, giving you more control over the created resources.
+
+Example using a Map:
+variable "users" {
+  type = map(object({
+    role = string
+    is_admin = bool
+  }))
+  default = {
+    alice = { role = "developer", is_admin = false }
+    bob   = { role = "manager", is_admin = true }
+    carol = { role = "developer", is_admin = false }
+  }
+}
+
+resource "aws_iam_user" "example" {
+  for_each = var.users
+  name     = each.key
+  tags = {
+    Role    = each.value.role
+    IsAdmin = each.value.is_admin
+  }
+}
+
+Example using a set of strings:
+
+variable "subnet_cidr_blocks" {
+  type    = set(string)
+  default = ["10.0.1.0/24", "10.0.2.0/24", "10.0.3.0/24"]
+}
+
+resource "aws_subnet" "example" {
+  for_each          = var.subnet_cidr_blocks
+  vpc_id            = aws_vpc.main.id
+  cidr_block        = each.value
+  availability_zone = "us-west-2a"
+}
+
+
+
+Terraform Moudles:
+Terraform modules are containers for multiple resources that are used together. A module consists of collection of 
+.tf and/or .tf.json files kept together in a directory. Modules are the main way to package and reuse resource configurations with Terraform.
+
+Module Structure:
+module_name/
+│
+├── main.tf         # Main configuration files
+├── variables.tf    # Input variables
+├── outputs.tf      # Output values
+└── README.md       # Documentation  
