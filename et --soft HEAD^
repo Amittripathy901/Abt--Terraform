@@ -1,0 +1,104 @@
+[33mcommit d7fe5a215a6d540e37ab00bfba341050a77b9044[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: Amittripathy901 <amittripathy.work@gmail.com>
+Date:   Tue Oct 22 19:00:06 2024 +0530
+
+    files updated
+
+ delete mode 100644 m-prashant/AWS-IAM-Management-Terraform/.terraform.lock.hcl
+ delete mode 100644 m-prashant/AWS-IAM-Management-Terraform/README.md
+ delete mode 100644 m-prashant/AWS-IAM-Management-Terraform/main.tf
+ delete mode 100644 m-prashant/AWS-IAM-Management-Terraform/users.yaml
+ delete mode 100644 m-prashant/AWS-S3/.terraform.lock.hcl
+ delete mode 100644 m-prashant/AWS-S3/main.tf
+ delete mode 100644 m-prashant/AWS-S3/myfile.txt
+ delete mode 100644 m-prashant/AWS/.terraform.lock.hcl
+ delete mode 100644 m-prashant/AWS/main.tf
+ delete mode 100644 m-prashant/AWS/outputs.tf
+ delete mode 100644 m-prashant/Data-Source-Task/.terraform.lock.hcl
+ delete mode 100644 m-prashant/Data-Source-Task/README.md
+ delete mode 100644 m-prashant/Data-Source-Task/main.tf
+ delete mode 100644 m-prashant/Modules/.terraform.lock.hcl
+ delete mode 100644 m-prashant/Modules/Readme.md
+ delete mode 100644 m-prashant/Modules/instance.tf
+ delete mode 100644 m-prashant/Modules/vpc.tf
+ delete mode 100644 m-prashant/Notes.txt
+ delete mode 100644 m-prashant/S3-Web-Hosting-Terraform/.terraform.lock.hcl
+ delete mode 100644 m-prashant/S3-Web-Hosting-Terraform/README.md
+ delete mode 100644 m-prashant/S3-Web-Hosting-Terraform/index.html
+ delete mode 100644 m-prashant/S3-Web-Hosting-Terraform/main.tf
+ delete mode 100644 m-prashant/S3-Web-Hosting-Terraform/styles.css
+ delete mode 100644 m-prashant/Terraform_Config.txt
+ delete mode 100644 m-prashant/VPC+Ec2+Nginx+Http Access-Project/.terraform.lock.hcl
+ delete mode 100644 m-prashant/VPC+Ec2+Nginx+Http Access-Project/README.md
+ delete mode 100644 m-prashant/VPC+Ec2+Nginx+Http Access-Project/ec2.tf
+ delete mode 100644 m-prashant/VPC+Ec2+Nginx+Http Access-Project/main.tf
+ delete mode 100644 m-prashant/VPC+Ec2+Nginx+Http Access-Project/outputs.tf
+ delete mode 100644 m-prashant/VPC+Ec2+Nginx+Http Access-Project/providers.tf
+ delete mode 100644 m-prashant/VPC+Ec2+Nginx+Http Access-Project/security_group.tf
+ delete mode 100644 m-prashant/VPC+Ec2+Nginx+Http Access-Project/vpc.tf
+ delete mode 100644 m-prashant/VPC-Terraform/.terraform.lock.hcl
+ delete mode 100644 m-prashant/VPC-Terraform/README.md
+ delete mode 100644 m-prashant/VPC-Terraform/main.tf
+ delete mode 100644 m-prashant/readme.md
+ delete mode 100644 m-prashant/terraform-basics.md
+ delete mode 100644 m-prashant/tf-backend/.terraform.lock.hcl
+ delete mode 100644 m-prashant/tf-backend/main.tf
+ delete mode 100644 m-prashant/tf-multi-resources/.terraform.lock.hcl
+ delete mode 100644 m-prashant/tf-multi-resources/task1/.terraform.lock.hcl
+ delete mode 100644 m-prashant/tf-multi-resources/task1/README.md
+ delete mode 100644 m-prashant/tf-multi-resources/task1/main.tf
+ delete mode 100644 m-prashant/tf-multi-resources/task2/.terraform.lock.hcl
+ delete mode 100644 m-prashant/tf-multi-resources/task2/README.md
+ delete mode 100644 m-prashant/tf-multi-resources/task2/main.tf
+ delete mode 100644 m-prashant/tf-multi-resources/task3/.terraform.lock.hcl
+ delete mode 100644 m-prashant/tf-multi-resources/task3/README.md
+ delete mode 100644 m-prashant/tf-multi-resources/task3/main.tf
+ delete mode 100644 m-prashant/tf-multi-resources/task3/terraform.tfvars
+ delete mode 100644 m-prashant/tf-multi-resources/task3/variables.tf
+ delete mode 100644 m-prashant/tf-multi-resources/task4/.terraform.lock.hcl
+ delete mode 100644 m-prashant/tf-multi-resources/task4/README.md
+ delete mode 100644 m-prashant/tf-multi-resources/task4/main.tf
+ delete mode 100644 m-prashant/tf-multi-resources/task4/terraform.tfvars
+ delete mode 100644 m-prashant/tf-multi-resources/task4/variables.tf
+ delete mode 100644 m-prashant/tf-operators-expressions/main.tf
+ delete mode 100644 m-prashant/tf-variable/.terraform.lock.hcl
+ delete mode 100644 m-prashant/tf-variable/main.tf
+ delete mode 100644 m-prashant/tf-variable/prod.auto.tfvars
+ delete mode 100644 m-prashant/tf-variable/terraform.tfvars
+ delete mode 100644 m-prashant/tf-variable/variables.tf
+ delete mode 100644 m-prashant/tf.data-sources/.terraform.lock.hcl
+ delete mode 100644 m-prashant/tf.data-sources/main.tf
+ delete mode 100644 m-prashant/tf.functions/main.tf
+
+[33mcommit 483e0f569945231ee92af0088cc6cfdc5cd4c94a[m
+Author: Amittripathy901 <amittripathy.work@gmail.com>
+Date:   Tue Oct 22 11:27:10 2024 +0530
+
+    Deleted Example
+
+ delete mode 160000 Examples/terraform-aws-ABT-VPC-Module
+
+[33mcommit 19c27dac9d09843581f55b455708986638b9e2e4[m
+Author: Amit Bikram Tripathy <138298853+Amittripathy901@users.noreply.github.com>
+Date:   Tue Oct 22 11:24:36 2024 +0530
+
+    Delete Examples directory
+
+ delete mode 160000 Examples/terraform-aws-ABT-VPC-Module
+
+[33mcommit 5358bbc474efca4572cd35cd7b6de68d55be5996[m
+Author: Amittripathy901 <amittripathy.work@gmail.com>
+Date:   Wed Oct 16 20:28:56 2024 +0530
+
+    fully updated
+
+ delete mode 100644 local_state/terraform.tfstate
+
+[33mcommit 8823b872539b9b1154b31dfd3cf17c529baa1132[m
+Author: root <root@ip-172-31-41-139.ap-south-1.compute.internal>
+Date:   Tue Oct 15 14:37:38 2024 +0000
+
+    terraform files added
+
+ delete mode 160000 Abt--Terraform
+ delete mode 100644 README.md
