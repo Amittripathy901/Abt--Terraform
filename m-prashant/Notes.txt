@@ -1,0 +1,271 @@
+terraform init --> Initialize Terraform in the directory
+terraform plan ---> Shows changes required by the current configuration
+terraform apply --> Apply the changes
+terraform destroy --> Destory the recent changes
+terraform validate --> Validates the configuration files
+
+
+variables:
+   variable "region" {
+    description = "The AWS Region to create resources in"
+    type = " "
+    default = "us-east-1"
+   }
+
+
+   Outputs:
+     output "name" {
+  value = output value
+}
+
+
+
+Random Provider:
+The "random" provider allows the use of randomness within Terraform configurations. This is a logical provider, which means that it works entirely within Terraform's logic, and doesn't interact with any other services.
+random = {
+      source = "hashicorp/random"
+      version = "3.6.3"
+      }
+
+
+Terraform Remote State Management
+ -> Create s3 bucket
+ -> Backend block for remote state Management
+ terraform {
+  backend "s3" or "dynamodb" or etc...{
+  bucket = "bucket-name"
+  key = "path to trafform.tfstate"
+  region = "ap-south-1"
+  }
+ }
+
+
+ Data Sources in Terraform"
+ It allows you to fetch and use information form:-
+    1. external sources or
+    2. existing resources within your cloud infrastructure
+
+    Useful for obtaining dyanmic data that you need for your configuration
+
+    Data Source: aws_ami
+Use this data source to get the ID of a registered AMI for use in other resources.
+
+data "aws_ami" "example" {
+  executable_users = ["self"]
+  most_recent      = true
+  name_regex       = "^myami-[0-9]{3}"
+  owners           = ["self"]
+
+  filter {
+    name   = "name"
+    values = ["myami-*"]
+  }
+
+  filter {
+    name   = "root-device-type"
+    values = ["ebs"]
+  }
+
+  filter {
+    name   = "virtualization-type"
+    values = ["hvm"]
+  }
+}
+
+
+Terraform variables: presedence (low to high below list)
+4.environment var
+3.terraform.tfvars  -> More presedence than variable.tf and environment var
+2.*.auto.rfvars
+1.-var & -var-file  --> we allocate variable file 
+
+Terraform Local Values:A local value assigns a name to an expression, so you can use the name multiple times within a module instead of repeating the expression. Local values are like a function's temporary local variables.
+
+$env:TF_VAR_aws_instance_type = "t2.micro" --> Set environment variable in windows powershell
+
+
+Limitation:
+variable "aws_instance_type" {
+  description = "What type of instance you want to create?"
+  type        = string
+  validation {   #-->Set limitation
+    condition = var.aws_instance_type=="t2.micro" || var.aws_instance_type=="t3.micro"
+    error_message = "Only t2 and t3 micro allowed"
+  }
+}
+
+
+Terraform Operators and Expression:
+# 1. Arithmetic Operators
+locals {
+  a = 5
+  b = 2
+  sum = a + b        # Addition
+  difference = a - b # Subtraction
+  product = a * b    # Multiplication
+  quotient = a / b   # Division
+  modulo = a % b     # Modulo
+}
+
+# 2. Comparison Operators
+locals {
+  equal = a == b           # Equal to
+  not_equal = a != b       # Not equal to
+  greater_than = a > b     # Greater than
+  less_than = a < b        # Less than
+  greater_or_equal = a >= b # Greater than or equal to
+  less_or_equal = a <= b   # Less than or equal to
+}
+
+# 3. Logical Operators
+locals {
+  and = a > 0 && b < 10   # Logical AND
+  or = a < 0 || b > 10    # Logical OR
+  not = !(a == b)         # Logical NOT
+}
+
+# 4. Conditional Expressions
+locals {
+  result = a > b ? "a is greater" : "b is greater or equal"
+}
+
+# 5. String Interpolation
+locals {
+  name = "John"
+  greeting = "Hello, ${name}!"
+}
+
+# 6. For Expressions
+locals {
+  list = ["a", "b", "c"]
+  upper_list = [for item in list : upper(item)]
+}
+
+# 7. Splat Expressions
+resource "aws_instance" "example" {
+  count = 3
+  # other configurations...
+}
+
+output "instance_ids" {
+  value = aws_instance.example[*].id
+}
+
+# 8. Dynamic Blocks
+resource "aws_security_group" "example" {
+  name = "example"
+  dynamic "ingress" {
+    for_each = var.service_ports
+    content {
+      from_port = ingress.value
+      to_port   = ingress.value
+      protocol  = "tcp"
+    }
+  }
+}
+
+# 9. Map and Lookup
+variable "instance_types" {
+  default = {
+    "dev"  = "t2.micro"
+    "prod" = "t2.large"
+  }
+}
+
+locals {
+  env = "dev"
+  instance_type = lookup(var.instance_types, local.env, "t2.medium")
+}
+
+# 10. Coalesce Function
+locals {
+  default_name = "default"
+  actual_name = coalesce(var.custom_name, local.default_name)
+}
+
+
+Terraform Functions:
+-->Built-in functions that you can call from within expressions to transform and combine values
+
+ex: max(5,12,9)
+
+  value = upper(local.value)
+  value = startswith(local.value, "Hello")
+  value = split(" ", local.value)
+  value = min(1,2,3,4,5)
+  value = abs(-15)
+  value = length(var.string_list)  #-->Length of the string
+  value = join(":", var.string_list)
+  value = contains(var.string_list, "Serv1") #-->Contains the value or not
+  value = toset(var.string_list) #-->Remove duplicate
+
+
+
+  Terraform Multi-Resources 
+  1.Count
+  2. for_each  
+
+1.Count --> Count is a simple way to create multiple instances of a resource. It's useful when you need to create a specific number of identical or nearly identical resources.
+
+Example:
+resource "aws_instance" "server" {
+  count = 3
+  ami           = "ami-0c55b159cbfafe1f0"
+  instance_type = "t2.micro"
+  tags = {
+    Name = "Server ${count.index + 1}"
+  }
+}
+This creates 3 EC2 instances, each with a unique tag name.
+
+2.for_each --> for_each is more versatile than count. It allows you to create multiple resources based on a map or set of strings, giving you more control over the created resources.
+
+Example using a Map:
+variable "users" {
+  type = map(object({
+    role = string
+    is_admin = bool
+  }))
+  default = {
+    alice = { role = "developer", is_admin = false }
+    bob   = { role = "manager", is_admin = true }
+    carol = { role = "developer", is_admin = false }
+  }
+}
+
+resource "aws_iam_user" "example" {
+  for_each = var.users
+  name     = each.key
+  tags = {
+    Role    = each.value.role
+    IsAdmin = each.value.is_admin
+  }
+}
+
+Example using a set of strings:
+
+variable "subnet_cidr_blocks" {
+  type    = set(string)
+  default = ["10.0.1.0/24", "10.0.2.0/24", "10.0.3.0/24"]
+}
+
+resource "aws_subnet" "example" {
+  for_each          = var.subnet_cidr_blocks
+  vpc_id            = aws_vpc.main.id
+  cidr_block        = each.value
+  availability_zone = "us-west-2a"
+}
+
+
+
+Terraform Moudles:
+Terraform modules are containers for multiple resources that are used together. A module consists of collection of 
+.tf and/or .tf.json files kept together in a directory. Modules are the main way to package and reuse resource configurations with Terraform.
+
+Module Structure:
+module_name/
+│
+├── main.tf         # Main configuration files
+├── variables.tf    # Input variables
+├── outputs.tf      # Output values
+└── README.md       # Documentation  

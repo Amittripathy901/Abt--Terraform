@@ -1,0 +1,11 @@
+-> It uses .tf extension
+-> format is HCL -Hashicorp Config Language
+-> Declarative Language
+-> State Management:- The state file (terraform.tfstate) maintains a detailed record of the current state of managed resources. This state file can be stored locally or remotely, with remote storage options enabling collaboration by sharing the state accross teams and environments.
+-> Support json format also,but HCL Preferred
+-> 
+-> 
+-> 
+-> 
+-> 
+
