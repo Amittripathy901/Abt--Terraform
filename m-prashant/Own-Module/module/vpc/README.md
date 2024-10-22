@@ -11,4 +11,11 @@ Requirements:
        ->If Public, Create IGW
        ->Associate public subnet with routing table
 
+
+Prepare Module for Publish
+README.md file
+License
+Examples
+Push code in Github
+Terraform Registry
        
