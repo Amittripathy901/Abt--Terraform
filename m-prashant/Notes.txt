@@ -307,4 +307,87 @@ pgp_key,
 
 
  
-Pre and Post - conditions - Resource validation
+Pre and Post - conditions - Resource validation --> Allows you to define checks that must be true before resource is created (precondition) and after a resource is created (postcondition)
+
+-->precondition:
+
+lifecycle {
+  precondition{
+    condition = var.bucket_name != ""
+    error_message = "The bucket name must not empty."
+  }
+}
+
+-->postcondition:
+
+lifecycle {
+  postcondition{
+    condition =  aws_s3_bucket.example.arn != ""
+    error_message "The bucket ARN must not be empty after creation"
+  }
+}
+
+
+State Manipulation
+
+Subcommands:
+    list                List resources in the state
+    mv                  Move an item in the state or rename
+    pull                Pull current state and output to stdout
+    push                Update remote state from a local state file
+    replace-provider    Replace provider in the state
+    rm                  Remove instances from the state
+    show                Show detail information of a resource in the state
+
+  terraform state rm <resourcename> --> terraform will not manage the resource anymore
+
+• List all resources in the state: terraform state list
+
+• Show details of a specific resource: terraform state show <resource_address>
+
+• Move a resource to a different address: terraform state mv <source_address> <destination_address>
+
+• Remove a resource from the state: terraform state rm <resource_address>
+
+• Pull the current state: terraform state pull
+
+• Push a local state file to the remote backend: terraform state push <state_file>
+
+• List all state commands: terraform state
+
+
+Terraform Import: Allows you to Import existing infrastructure resources into your Terraform state.
+
+Use Case:
+1.Assuming you have already created an Ec2 instance.
+2.Create a resource block in tf config (initially you can keep it empty)
+3.Use terraform import command 
+   terraform import aws_instance.main ec2_id
+4.Terraform show to inspect the imported resource
+5.Update the resource block accordingly
+
+
+
+Terraform CLI Workspace --> Allows you to manage multiple sets of infrastructure configurations within a single configuration directory. Each workspace has its own state file  
+
+• Listing Workspaces --> terraform workspace list
+
+• Creating a Workspace --> terraform workspace new <workspace_name>
+
+• Selecting a Workspace --> terraform workspace select <workspace_name>
+
+• Showing the Current Workspace --> terraform workspace show
+
+• Deleting a Workspace
+  >terraform workspace select default
+  >terraform workspace delete <workspace_name>
+
+
+  Terraform cloud:-
+  Terraform cloud is a managed service provided by HashiCorp that facilitates collaboration on Terraform configurations.
+
+  Providing features like:
+     -remote state Management
+     -version control system (vcs) integration
+     -automated runs
+     -secure variable Management
